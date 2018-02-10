@@ -8,6 +8,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 module.exports = {
+  devtool: 'source-map',
   entry: './client/index.js',
   output: {
     path: path.resolve('dist'),
@@ -16,8 +17,10 @@ module.exports = {
   plugins: [HtmlWebpackPluginConfig],
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
+      {test: /\.js$/,loader: 'babel-loader',exclude: /node_modules/,query: {presets:['es2015', 'react']}},
+      {test: /\.scss?$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},
+      {test: /\.css?$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},
+      {test: /\.(jpe?g|gif|png|eot|svg|woff|woff2|ttf)$/, loader: 'file-loader'}
     ]
   }
 };
