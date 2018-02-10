@@ -49,15 +49,14 @@ export default class App extends React.Component {
   }
 
   cellClicked(row, col) {
-    this.counter ++;
-    let { grid, player } = this.state;
-    if(grid[row][col] != "") {
+    let { grid, player, winner } = this.state;
+    if(grid[row][col] != "" || winner != "") {
       return false;
     }
+    this.counter ++;
     grid[row][col] = player;
-    let winner = this.validateGame(grid);
+    winner = this.validateGame(grid);
     if(winner) {
-      this.resetGrid();
       this.setState({winner});
     } else {
       player = (player == this.cross) ? this.circle : this.cross;
@@ -111,26 +110,28 @@ export default class App extends React.Component {
 
   render() {
     let { player, winner } = this.state;
-    let gridContent;
+    let gridContent, gridContentWinner;
 
     if(winner == "draw") {
-      gridContent = (
-        <div>
-          <Icon name={this.cross} size="huge"/>
-          <Icon name={this.circle} size="huge"/>
+      gridContentWinner = (
+        <div className="app-grid_result">
+          <div>
+            <Icon name={this.cross} size="huge"/>
+            <Icon name={this.circle} size="huge"/>
+          </div>
           <h3>Draw!</h3>
         </div>
       );
     } else if(winner) {
-      gridContent = (
-        <div>
+      gridContentWinner = (
+        <div className="app-grid_result">
           <Icon name={winner} size="massive"/>
           <h3>Winner!</h3>
         </div>
       );
-    } else {
-      gridContent = this.buildGrid();
     }
+
+    gridContent = this.buildGrid();
 
     return (
       <div className="app-container">
@@ -141,6 +142,7 @@ export default class App extends React.Component {
             <div className="text-right"><Icon name={player}/> Turn</div>
           </div>
           <div className="app-grid">
+            {gridContentWinner}
             {gridContent}
           </div>
           <div>
