@@ -14,7 +14,7 @@ export default class App extends React.Component {
     this.cross = "x";
     this.circle = "circle outline";
     this.currentPlayer = "x";
-    this.isCellClicked = false;
+    this.isGridLoading = false;
 
     this.state = {
       level: "impossible",
@@ -33,7 +33,7 @@ export default class App extends React.Component {
   componentDidUpdate(){
     let { level, grid } = this.state;
     let currentPlayer = this.currentPlayer;
-    if(level != "players" && this.isCellClicked) {
+    if(level != "players" && this.isGridLoading) {
       setTimeout(() => {
         let cell = this.getNextCell(grid, 0, currentPlayer);
         this.cellClicked(cell.r, cell.c, false);
@@ -44,7 +44,7 @@ export default class App extends React.Component {
   resetGrid() {
     let grid = new Array(3).fill('').map(()=>new Array(3).fill(''));
     this.currentPlayer = this.cross;
-    this.isCellClicked = false;
+    this.isGridLoading = false;
     this.setState({grid, winner: ""});
   }
 
@@ -53,8 +53,8 @@ export default class App extends React.Component {
     this.setState({level});
   }
 
-  cellClicked(row, col, isCellClicked) {
-    let { grid, winner } = this.state;
+  cellClicked(row, col, isGridLoading) {
+    let { grid, winner, level } = this.state;
     if(winner != "" || grid[row][col] != "") {
       return false;
     }
@@ -66,7 +66,9 @@ export default class App extends React.Component {
       return false;
     } else {
       this.currentPlayer = (this.currentPlayer == this.cross) ? this.circle : this.cross;
-      this.isCellClicked = isCellClicked;
+      if(level != "players") {
+        this.isGridLoading = isGridLoading;
+      }
       this.setState({grid});
     }
 
@@ -206,7 +208,7 @@ export default class App extends React.Component {
           <h3>Winner!</h3>
         </div>
       );
-    } else if (this.isCellClicked) {
+    } else if (this.isGridLoading) {
       gridContentWinner = (
         <div className="app-grid_result"/>
       );
