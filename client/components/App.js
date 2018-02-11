@@ -19,26 +19,19 @@ export default class App extends React.Component {
     this.state = {
       level: "players",
       player: "x",
-      grid: [
-        ['', '', ''],
-        ['', '', ''],
-        ['', '', '']
-      ],
+      grid: new Array(3).fill('').map(()=>new Array(3).fill('')),
       winner: ""
     };
 
     this.changeLevel = this.changeLevel.bind(this);
     this.resetGrid = this.resetGrid.bind(this);
     this.buildGrid = this.buildGrid.bind(this);
+    this.cellClicked = this.cellClicked.bind(this);
 
   }
 
   resetGrid() {
-    let grid = [
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', '']
-    ];
+    let grid = new Array(3).fill('').map(()=>new Array(3).fill(''));
     this.counter = 0;
     this.setState({grid, winner: ""});
   }
@@ -138,16 +131,16 @@ export default class App extends React.Component {
         <Header className="text-center" as='h3' content="Tic Tac Toe"/>
         <Segment className="app-segment">
           <div className="flex">
-            <Dropdown size="mini" onChange={(e, {value}) => this.changeLevel(value)} options={this.options} value={this.state.level}/>
+            <div>
+              <Dropdown size="mini" onChange={(e, {value}) => this.changeLevel(value)} options={this.options} value={this.state.level}/>
+            </div>
             <div className="text-right"><Icon name={player}/> Turn</div>
           </div>
           <div className="app-grid">
             {gridContentWinner}
             {gridContent}
           </div>
-          <div>
-            <Button fluid onClick={() => this.resetGrid()}>Restart</Button>
-          </div>
+          <Button className="app-segment_restart" fluid onClick={this.resetGrid}>Restart</Button>
         </Segment>
       </div>
     );
