@@ -3,6 +3,12 @@
   margin: 30px auto;
   .app-segment {
     background-color: $segment-color;
+    &_restart {
+      color: $grid-color;
+      &:hover {
+        color: $grid-color;
+      }
+    }
   }
 }
 
@@ -22,8 +28,8 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    color: beige;
+    color: $result-color;
     z-index: 1;
-    background-color: rgba(0,0,0,.3);
+    background-color: $result-bg-color;
   }
 }
