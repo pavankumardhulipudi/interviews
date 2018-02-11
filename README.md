@@ -6,7 +6,7 @@ README
 Node.js
 Webpack
 
-#Navigate to project root folder(gmApp) and run below commands
+#Navigate to project root folder(tictactoe) and run below commands
 1. npm install
 2. npm start
 
