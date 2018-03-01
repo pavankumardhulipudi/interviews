@@ -1,8 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import './styles/main.scss';
+import jquery from 'jquery';
+import 'angular';
 import App from './components/App';
-import 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
-import './styles/main.scss'
-
-ReactDOM.render(<App/>, document.getElementById('myApp'));
+window.jQuery = jquery;
+window.$ = jquery;

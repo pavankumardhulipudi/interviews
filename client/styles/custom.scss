@@ -1,35 +1,44 @@
-.app-container {
-  width: 600px;
-  margin: 30px auto;
-  .app-segment {
-    background-color: $segment-color;
-    &_restart {
-      color: $grid-color;
-      &:hover {
-        color: $grid-color;
-      }
-    }
+.main-container {
+  margin: 50px;
+}
+
+.segment {
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 5px;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: vertical;
+}
+
+.flex-column {
+  flex: 1 auto;
+}
+
+.a-content {
+  display: none;
+  &.active {
+    display: block;
   }
 }
 
-.app-grid {
-  background-color: $grid-color;
-  margin: 20px 0;
-  padding: 50px 150px;
-  text-align: center;
-  position: relative;
-  &_result {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+.progress-bar {
+  height: 20px;
+  width: 200px;
+  background-color: lightgray;
+  border-radius: 5px;
+  &_filled {
+    width: 35%;
     height: 100%;
-    color: $result-color;
-    z-index: 1;
-    background-color: $result-bg-color;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: blue;
   }
 }

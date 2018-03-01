@@ -13,9 +13,11 @@
     "start": "webpack-dev-server"
   },
   "dependencies": {
+    "angular": "^1.4.7",
     "css-loader": "^0.28.9",
     "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.30.1",
+    "jquery": "^3.3.1",
     "node-sass": "^4.7.2",
     "path": "^0.12.7",
     "react": "^16.2.0",

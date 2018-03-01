@@ -10,9 +10,6 @@
   cursor: pointer;
 }
 
-.flex {
-  display: flex;
-  > * {
-    flex: 1 auto;
-  }
+.hide {
+  display: none;
 }

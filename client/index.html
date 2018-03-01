@@ -2,11 +2,179 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Tic Tac Toe - Game</title>
+    <title>UI Interview Questions</title>
   </head>
   <body>
-    <div id="myApp">
-
+    <div class="main-container">
+      <div id="s1" class="ui segment">
+        <div>
+          <div class="flex-row">
+            <div><input type="checkbox" id="selectAll" onclick="s1()"/><label class="ui checbox label" for="selectAll">Select All</label></div>
+          </div>
+          <div class="flex-row">
+            <div class="flex-column"><input type="checkbox" class="checkbox"/></div><div class="flex-column">2</div><div class="flex-column">3</div><div class="flex-column">4</div>
+          </div>
+          <div class="flex-row">
+            <div class="flex-column"><input type="checkbox" class="checkbox"/></div><div class="flex-column">2</div><div class="flex-column">3</div><div class="flex-column">4</div>
+          </div>
+          <div class="flex-row">
+            <div class="flex-column"><input type="checkbox" class="checkbox"/></div><div class="flex-column">2</div><div class="flex-column">3</div><div class="flex-column">4</div>
+          </div>
+        </div>
+      </div>
+      <div id="s2" class="ui segment">
+        <a href="https://hostway.com/blog/10-ways-to-make-your-website-load-faster/" target="blank">10 Ways to Make Your Website Load Faster</a>
+      </div>
+      <div id="s3" class="ui segment">
+        <div>File Uploader</div>
+        <input type="file" id="fileUploader" onchange="fileChanged()" class="hide"/>
+        <input type="text" readonly id="fileUploaderText"/><button id="upload">Upload</button>
+      </div>
+      <div id="s3" class="ui segment" ng-app="myApp">
+        <div>TODO List</div>
+        <div ng-controller="myCtrl">
+          <ul ng-repeat="task in todoList track by $index">
+            <li ng-if="task.completed != true">{{task.name}} - <button ng-click="completeTask(task)">Complete Task</button></li>
+          </ul>
+        </div>
+      </div>
+      <div id="s4" class="ui segment">
+        <div>Accordian</div>
+        <ul>
+          <li>
+            <h4 class="a-header">Acord 1</h4>
+            <div class="a-content active">content of accordian 1<div>
+          </li>
+          <li>
+            <h4  class="a-header">Acord 2</h4>
+            <div class="a-content">content of accordian 2<div>
+          </li>
+          <li>
+            <h4 class="a-header">Acord 3</h4>
+            <div class="a-content">content of accordian 3<div>
+          </li>
+        </ul>
+      </div>
+      <div id="s5" class="ui segment" style="height: 150px; display: flex; justify-content: center; align-items: center">
+        <span>Horizontally and Vertically Centered</span>
+      </div>
+      <div id="s5" class="ui segment">
+        <progress value="22" max="100"></progress>
+        <div class="progress-bar">
+          <div class="progress-bar_filled"> </div>
+        </div>
+      </div>
     </div>
+    <script>
+      function s1() {
+        let isSelectAllChecked = $("#selectAll")[0].checked;
+        for(let i=0; i<$(".checkbox").length; i++) {
+          $(".checkbox")[i].checked = isSelectAllChecked;
+        }
+      }
+
+      function fileChanged(){
+        $("#fileUploaderText").val($("#fileUploader").val());
+      }
+
+      var sum = function(a) {
+
+        if(arguments.length ===3) {
+          // Array.prototype.slice.call(arguments) || Array.from(arguments)
+          return Array.prototype.slice.call(arguments).reduce((s,i) => s+i);
+        } else {
+          return function(b) {
+            return function(c) {
+              return a+b+c;
+            }
+          }
+        }
+      }
+      console.log("sum---",sum(4)(5)(6), sum(4,5,6));
+
+      let sum1 = a => b => c => a+b+c;
+      console.log("sum1---",sum1(4)(5)(6));
+
+      function palindrome(str) {
+        for(let i=0, len=str.length; i<=len/2; i++) {
+          if(str[i] != str[len-i-1]) {
+            return false;
+          }
+        }
+        return true;
+        //return str == str.split("").reverse().join("");
+      }
+      console.log("palindrome---",palindrome("asdfdsa"));
+
+      function duplicateArrays(ar1, ar2) {
+        let duplicates = new Set();
+        let smallArr = ar1;
+        let bigArr = ar2;
+        if(ar1.length > ar2.length) {
+          smallArr = ar2;
+          bigArr = ar1;
+        }
+        for(let i=0, len=bigArr.length; i<len; i++) {
+          if(i<smallArr.length && bigArr.indexOf(smallArr[i]) != -1) {
+            duplicates.add(smallArr[i]);
+          }
+          if(smallArr.indexOf(bigArr[i]) != -1) {
+            duplicates.add(bigArr[i]);
+          }
+        }
+        return Array.from(duplicates);
+        //Convert set to array  Array.from(set) || [...set]
+      }
+      console.log("duplicateArrays---",duplicateArrays([1,2,3,4,5], [1,2,3]));
+
+      /*READING HUGE FILE IN CHUNKS AND CREATE WEB SETVICE API
+      var CHUNK_SIZE = 10 * 1024 * 1024, // 10MB
+        buffer = new Buffer(CHUNK_SIZE),
+        filePath = '/tmp/foo';
+
+      fs.open(filePath, 'r', function(err, fd) {
+      if (err) throw err;
+      function readNextChunk() {
+        fs.read(fd, buffer, 0, CHUNK_SIZE, null, function(err, nread) {
+          if (err) throw err;
+
+          if (nread === 0) {
+            // done reading file, do any necessary finalization steps
+
+            fs.close(fd, function(err) {
+              if (err) throw err;
+            });
+            return;
+          }
+
+          var data;
+          if (nread < CHUNK_SIZE)
+            data = buffer.slice(0, nread);
+          else
+            data = buffer;
+
+          // do something with `data`, then call `readNextChunk();`
+        });
+      }
+      readNextChunk();
+      });*/
+
+      function divideNoDivide(num, div) {
+        if(div == 0) {
+          return 0;
+        }
+        let count = 0;
+        let rem = 0;
+        while(num >= div) {
+          num -= div;
+          count++;
+          if(num<=div)
+          rem = num;
+        }
+        return [count, rem];
+      }
+      console.log("divideNoDivide---", divideNoDivide(12,5));
+
+    </script>
   </body>
 </html>
