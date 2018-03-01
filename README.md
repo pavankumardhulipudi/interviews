@@ -1,12 +1,12 @@
 README
 ======
-#Tic Tac Toe Game
+#Interview questions
 
 #Required softwares:
 Node.js
 Webpack
 
-#Navigate to project root folder(tictactoe) and run below commands
+#Navigate to project root folder(interviews) and run below commands
 1. npm install
 2. npm start
 
