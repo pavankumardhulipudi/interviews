@@ -125,7 +125,7 @@
         return Array.from(duplicates);
         //Convert set to array  Array.from(set) || [...set]
       }
-      console.log("duplicateArrays---",duplicateArrays([1,2,3,4,5], [1,2,3]));
+      console.log("duplicateArrays---",duplicateArrays([1,2,3,4,5], [1,2,3])); // duplicateArrays--- (3) [1, 2, 3]
 
       /*READING HUGE FILE IN CHUNKS AND CREATE WEB SETVICE API
       var CHUNK_SIZE = 10 * 1024 * 1024, // 10MB
@@ -160,7 +160,7 @@
       });*/
 
       function divideNoDivide(num, div) {
-        if(div == 0) {
+        if(div === 0) {
           return 0;
         }
         let count = 0;
@@ -168,12 +168,196 @@
         while(num >= div) {
           num -= div;
           count++;
-          if(num<=div)
-          rem = num;
+          if(num<div) {
+            rem = num;
+          }
         }
-        return [count, rem];
+        return {count, rem};
       }
-      console.log("divideNoDivide---", divideNoDivide(12,5));
+      console.log("divideNoDivide---", divideNoDivide(15,5)); // divideNoDivide--- {count: 3, rem: 0}
+
+
+      function maximizeStocksProfit(stocks) {
+        let buy = 0,
+            sell = 0,
+            cheap = 0,
+            profit = 0;
+        for(let i=1, len = stocks.length; i< len; i++) {
+          if(stocks[i] < stocks[cheap]) {
+            cheap = i;
+          } else if (stocks[i] - stocks[cheap] > profit) {
+            buy = cheap;
+            sell = i;
+            profit = stocks[i] - stocks[cheap];
+          }
+        }
+        console.log({ buy, sell, profit});
+      }
+      maximizeStocksProfit([10, 99, 100, 1, 50, 99]); // O(n) - {buy: 3, sell: 5, profit: 98}
+
+      function maxSumConsecutiveNumbers(arr) {
+        let max = sum = arr[0];
+        for(let i=1; i<arr.length; i++) {
+          sum = Math.max(arr[i], arr[i]+sum);
+          if(sum > max)
+            max = sum;
+        }
+        console.log(max);
+      }
+      maxSumConsecutiveNumbers([-2, 3, 2, -1]); // O(n) 5
+
+
+      function brackets(output, open, close, pairs) {
+          if(close==pairs) {
+              console.log(output);
+          } else {
+              if(open<pairs)
+                  brackets(output + "(", open+1, close, pairs);
+              if(close<open)
+                  brackets(output + ")", open, close+1, pairs);
+          }
+      }
+
+      brackets("", 0, 0, 4); //O(Cn)
+
+
+      function loopInArray(arr) {
+        let i = arr[0],
+            j = arr[0],
+            len = arr.length,
+            isLoop = false;
+
+        while(true) {
+          if(i < 0 || i > len-1 || j < 0 || j > len-1) {
+            break;
+          }
+          i = arr[i];
+          if(i < 0 || i > len-1) {
+            break;
+          }
+          if(i == j) {
+            isLoop = true;
+            break;
+          }
+          i = arr[i];
+          if(i < 0 || i > len-1) {
+            break;
+          }
+          if(i == j) {
+            isLoop = true;
+            break;
+          }
+          j = arr[j];
+          if(j < 0 || j > len-1) {
+            break;
+          }
+          if(i==j) {
+            isLoop = true;
+            break;
+          }
+        }
+        console.log(isLoop);
+      }
+      loopInArray([1, 2, 3, 4, 5, 8]); // O(n) // true
+
+
+      function sourceDestination(boardingPasses) {
+        let sources = new Set();
+        let destinations = new Set();
+        for(let i=0; i<boardingPasses.length; i++) {
+          sources.add(boardingPasses[i][0]);
+          destinations.add(boardingPasses[i][1]);
+          if(destinations.has(boardingPasses[i][0])) {
+            sources.delete(boardingPasses[i][0]);
+            destinations.delete(boardingPasses[i][0]);
+          }
+          if(sources.has(boardingPasses[i][1])) {
+            sources.delete(boardingPasses[i][1]);
+            destinations.delete(boardingPasses[i][1]);
+          }
+        }
+        console.log(sources, destinations);
+      }
+      sourceDestination([[4,5], [1,4], [6,8], [5, 6]]); // O(n) 1,8
+
+
+      function balancePointInanArray(arr) {
+        let leftSum = 0;
+        let leftSumArr = [0];
+        let rightSum = 0;
+        let rightSumArr = [0];
+        for(let i=1; i< arr.length; i++) {
+          leftSum = leftSum+arr[i-1];
+          leftSumArr.push(leftSum);
+          rightSum = rightSum+arr[arr.length-i];
+          rightSumArr.unshift(rightSum);
+        }
+        for(let i=0; i<arr.length; i++) {
+          if(leftSumArr[i] == rightSumArr[i]) {
+            return {i}
+          }
+        }
+        return null;
+      }
+      console.log(balancePointInanArray([-1,1,2,1,1,2,5,1,5]));   // O(n) {i: 6}
+
+
+
+      function fibonacci(n){
+        let a = 1,
+            b = 1,
+            c = 0;
+        if(n >= 0) {
+          console.log(0);
+        }
+        if(n >= 1) {
+          console.log(1);
+        }
+        if(n >= 2) {
+          console.log(1);;
+        }
+        for(let i=2; i<n; i++) {
+          c = a + b;
+          console.log(c)
+          a = b;
+          b = c;
+        }
+      }
+      fibonacci(10);
+
+
+
+      function sumOfPairsInArray(arr, sum) {
+        let low = 0,
+            high = arr.length-1;
+        while(low < high) {
+          if(arr[low] + arr[high] == sum) {
+            return {low, high, sum: arr[low] + arr[high]};
+            break;
+          } else if (arr[low] + arr[high] < sum) {
+            low++;
+          } else {
+            high--;
+          }
+        }
+        return null;
+      }
+      console.log(sumOfPairsInArray([1,2,4,6,9], 8)); // Sorted O(n) {low: 1, high: 3, sum: 8}
+
+
+      function sumOfPairsInArray(arr, sum) {
+        let memory = new Set();
+        for(let i=0; i<arr.length; i++) {
+          if(memory.has(arr[i])) {
+            return {1: arr[i], 2: sum - arr[i]};
+          } else {
+            memory.add(sum - arr[i]);
+          }
+        }
+        return false;
+      }
+      console.log(sumOfPairsInArray([1, 2, 4, 4], 8)); // Unsorted O(n) {1: 4, 2: 4}
+
 
     </script>
   </body>
