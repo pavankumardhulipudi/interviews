@@ -106,6 +106,19 @@
       return result;
     }
 
+  	preOrderStack() {
+    	let stack = [this.root];
+      let result = [];
+      let node;
+      while(stack.length > 0) {
+      	node = stack.pop();
+        result.push(node.data);
+        node.right && stack.push(node.right);
+        node.left && stack.push(node.left);
+      }
+      return result;
+    }
+
     inOrder() {
       let result = [];
       function inOrder(node) {
@@ -114,6 +127,29 @@
         node.right && inOrder(node.right);
       }
       inOrder(this.root);
+      return result;
+    }
+
+    inOrderStack() {
+    	let stack = [this.root];
+      let result = [];
+      let node = this.root;
+      while(node.left) {
+        stack.push(node.left);
+        node = node.left;
+      }
+
+      while(stack.length > 0) {
+      	node = stack.pop();
+        result.push(node.data);
+        if(node.right) {
+        	node = node.right;
+          while(node) {
+          	stack.push(node);
+            node = node.left;
+          }
+        }
+      }
       return result;
     }
 
@@ -126,6 +162,19 @@
       }
       postOrder(this.root);
       return result;
+    }
+
+    postOrderStack() {
+    	let stack = [this.root];
+      let result = [];
+      let node;
+      while(stack.length > 0) {
+      	node = stack.pop();
+        result.push(node.data);
+        node.left && stack.push(node.left);
+        node.right && stack.push(node.right);
+      }
+      return result.reverse();
     }
 
     levelOrder() {
@@ -162,7 +211,10 @@
   console.log("BST Tree Balanced? - ", bst.isTreeBalanced());
   console.log("BST Min Max node - ", bst.findMinMax());
   console.log("DFS - In order traversal - ", bst.inOrder());
+  console.log("DFS - inOrderStack traversal - ", bst.inOrderStack());
   console.log("DFS - Pre order traversal - ", bst.preOrder());
+  console.log("DFS - preOrderStack traversal - ", bst.preOrderStack());
   console.log("DFS - Post order traversal - ", bst.postOrder());
+  console.log("DFS - postOrderStack traversal - ", bst.postOrderStack());
   console.log("BFS - Level order traversal - ", bst.levelOrder());
 })();
